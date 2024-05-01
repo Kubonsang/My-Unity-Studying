@@ -3,7 +3,12 @@ guid: daa72d767003c864684a5720ef14e2e1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dragon_col_001
+    second: {fileID: 2100000, guid: 6e01172c64736274f8092186b5fa7fdb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

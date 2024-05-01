@@ -3,7 +3,12 @@ guid: 57653a6c56370814ebba304cb368b9d1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Warg_col_001
+    second: {fileID: 2100000, guid: 3f3ae2ca556afb4439f609c8caae0958, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

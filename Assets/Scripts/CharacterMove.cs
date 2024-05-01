@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 // 캐릭터를 이동시킨다.
 // Chapter3
@@ -13,7 +14,7 @@ public class CharacterMove : MonoBehaviour {
 	Vector3 velocity = Vector3.zero; 
 	// 캐릭터 컨트롤러의 캐시.
 	CharacterController characterController; 
-	// 도착했는가(도착했다 true / 도착하지 않았다 false).
+	// 도착했는가
 	public bool arrived = false; 
 	
 	// 방향을 강제로 지시하는가.
@@ -30,18 +31,23 @@ public class CharacterMove : MonoBehaviour {
 	
 	// 회전 속도.
 	public float rotationSpeed = 360.0f;
-	
-	
+
+	// 목적지로의 방향.
+	private Vector3 direction;
+
+	// 목적지와 플레이어 사이의 거리.
+	private float distance;
 	
 	// Use this for initialization
 	void Start () {
+		// inspector 창에 있는 component를 가져온다.
+		// 초기화를 void Strat()에서 한다.
 		characterController = GetComponent<CharacterController>();
 		destination = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
 		// 이동 속도 velocity를 갱신한다.
 		if (characterController.isGrounded) {
 			// 수평면에서 이동을 고려하므로 XZ만 다룬다.
@@ -51,8 +57,8 @@ public class CharacterMove : MonoBehaviour {
 			
 			//********* 여기서부터 XZ만으로 생각한다. ********
 			// 목적지까지 거리와 방향을 구한다.
-			Vector3 direction = (destinationXZ - transform.position).normalized;
-			float distance = Vector3.Distance(transform.position, destinationXZ);
+			direction = (destinationXZ - transform.position).normalized;
+			distance = Vector3.Distance(transform.position, destinationXZ);
 			
 			// 현재 속도를 보관한다.
 			Vector3 currentVelocity = velocity;
@@ -79,12 +85,12 @@ public class CharacterMove : MonoBehaviour {
 				if (velocity.magnitude > 0.1f && !arrived) { 
 					// 이동하지 않았다면 방향은 변경하지 않는다.
 					Quaternion characterTargetRotation = Quaternion.LookRotation(direction);
-					transform.rotation = Quaternion.RotateTowards(transform.rotation,characterTargetRotation,rotationSpeed * Time.deltaTime);
+					transform.rotation = Quaternion.RotateTowards(transform.rotation, characterTargetRotation, rotationSpeed * Time.deltaTime);
 				}
 			} else {
 				// 강제로 방향을 지정한다.
 				Quaternion characterTargetRotation = Quaternion.LookRotation(forceRotateDirection);
-				transform.rotation = Quaternion.RotateTowards(transform.rotation,characterTargetRotation,rotationSpeed * Time.deltaTime);
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, characterTargetRotation, rotationSpeed * Time.deltaTime);
 			}
 			
 		}
@@ -101,11 +107,16 @@ public class CharacterMove : MonoBehaviour {
 		// CharacterController를 사용해서 움직인다.
 		characterController.Move(velocity * Time.deltaTime+snapGround);
 		
-		if (characterController.velocity.magnitude < 0.0001f)
-		{ arrived = true; }
+		// 수정사항.
+		// 게임에서 arrived가 계속 true로 변하고, 그로 인해 이동에 차질이 생겨서 조건을 변경함.
+		// 플레이어의 위치와, 설정한 목적지의 거리가 가깝고, 속도가 충분히 낮아져야 도착.
+		if (distance < StoppingDistance  && characterController.velocity.magnitude < 0.1f)
+		{
+			arrived = true; 
+		}
 		
 		// 강제로 방향 변경을 해제한다.
-		if (forceRotate && Vector3.Dot(transform.forward,forceRotateDirection) > 0.99f)
+		if (forceRotate && Vector3.Dot(transform.forward, forceRotateDirection) > 0.99f)
 			forceRotate = false;
 		
 		
