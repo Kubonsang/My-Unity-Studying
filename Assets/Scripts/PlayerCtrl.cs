@@ -21,6 +21,7 @@ public class PlayerCtrl : MonoBehaviour
         Walking();
     }
 
+    // 마우스 좌클릭을 풀 때, 그 위치를 구하고 플레이어를 이동시킴.
     void Walking()
     {
         if (inputManager.Clicked())
