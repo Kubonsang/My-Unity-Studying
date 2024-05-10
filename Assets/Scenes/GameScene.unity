@@ -175,6 +175,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 49f02a60a2f2b74488ed064dff70cef6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 49f02a60a2f2b74488ed064dff70cef6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b1e0ee69a1edcd741a5edac29367a69f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -594,6 +602,7 @@ MonoBehaviour:
   verticalAngle: 10
   lookTarget: {fileID: 813696796}
   offset: {x: 0, y: 1.5, z: 0}
+  speed: -2.5
 --- !u!1 &2108921357
 GameObject:
   m_ObjectHideFlags: 0

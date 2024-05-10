@@ -9,6 +9,7 @@ public class FollowCamera : MonoBehaviour
     public float verticalAngle = 10.0f;
     public Transform lookTarget;
     public Vector3 offset = Vector3.zero;
+    public float speed = 0.1f;
 
     InputManager inputManager;
     void Start()
@@ -19,11 +20,17 @@ public class FollowCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel") * speed;
+
+        distance += scroll;
+        distance = Mathf.Clamp(distance, 1.0f, 7.0f);
+
         // 드래그 입력으로 카메라 회전각을 갱신한다.
         if (inputManager.Moved())
         {
             float anglePerPixel = rotAngle / (float)Screen.width;
-            // 마우스를 꾹 누른 채, 이동시켰을 때의 이동거리.
+            // 마우스를 꾹 누른 채, 이동시켰을 때의 이동거리.nity 
             Vector2 delta = inputManager.getDeltaPosition();
 
             //캐릭터를 기준으로 좌우 각도
